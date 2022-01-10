@@ -32,7 +32,6 @@ class KWRequest {
     // 添加所有的实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('所有的实例都有的拦截器1')
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: true,
@@ -43,27 +42,23 @@ class KWRequest {
         return config
       },
       (err) => {
-        console.log('所有的实例都有的拦截器2')
         return err
       }
     )
 
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('所有的实例都有的拦截器3')
-
         // 移除loading
         this.loading?.close()
 
         const data = res.data
         if (data.returnCode === '-1001') {
-          console.log('请求失败')
+          console.log('错误')
         } else {
           return data
         }
       },
       (err) => {
-        console.log('所有的实例都有的拦截器4')
         this.loading?.close()
 
         // 判断不同的httpErrorCode来显示不同的信息
@@ -89,7 +84,6 @@ class KWRequest {
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors.responseInterceptor(res)
           }
-          console.log(res)
 
           // 将showLoading设置为初始化值、不影响下一请求
           this.showLoading = DEFAULT_LOADING

@@ -12,23 +12,8 @@ import App from './App.vue'
 
 import router from './router'
 import store from './store'
-import kwRequest from './service'
-
-interface DataType {
-  data: any
-  returnCode: string
-  success: boolean
-}
-
-kwRequest
-  .get<DataType>({
-    url: '/home/multidata',
-    showLoading: false
-  })
-  .then((res) => {
-    console.log(res.data)
-    console.log(res.returnCode)
-  })
+// 刷新页面的时候就调用此函数
+import { setupStore } from './store'
 
 const app = createApp(App)
 
@@ -39,6 +24,7 @@ Object.keys(ElIcons).forEach((key) => {
 app.use(router)
 app.use(store)
 app.use(ElementPlus)
+setupStore()
 app.mount('#app')
 
 // 链式使用
