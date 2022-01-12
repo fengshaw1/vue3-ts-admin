@@ -2,11 +2,12 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title">后台管理系统</span>
+      <span v-if="!collapse" class="title">后台管理系统</span>
     </div>
     <el-menu
       default-active="2"
       class="el-menu-vertical"
+      :collapse="collapse"
       :unique-opened="false"
       background-color="#0c2135"
       text-color="#b7bdc3"
@@ -48,10 +49,16 @@ import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
 
 export default defineComponent({
+  props: {
+    collapse: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     const store = useStore()
     const userMenus = computed(() => store.state.login.userMenus)
-
+    console.log(userMenus.value)
     return {
       userMenus
     }
@@ -79,7 +86,8 @@ export default defineComponent({
 
     .title {
       font-size: 16px;
-      font-weight: 700;
+      line-height: 49px;
+      font-weight: 200;
       color: white;
     }
   }
