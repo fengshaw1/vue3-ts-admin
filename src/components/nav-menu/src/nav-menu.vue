@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span v-if="!collapse" class="title">后台管理系统</span>
+      <span v-if="!collapse" class="title">Vue3+Ts</span>
     </div>
     <el-menu
       default-active="2"
@@ -87,7 +87,7 @@ export default defineComponent({
     .title {
       font-size: 16px;
       line-height: 49px;
-      font-weight: 200;
+      font-weight: 700;
       color: white;
     }
   }
