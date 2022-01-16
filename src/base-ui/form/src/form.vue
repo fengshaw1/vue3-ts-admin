@@ -15,11 +15,7 @@
                 />
               </template>
               <template v-else-if="item.type === 'el-select'">
-                <component
-                  :is="item.type"
-                  :placeholder="item.placeholder"
-                  clearable
-                >
+                <component :is="item.type" :placeholder="item.placeholder">
                   <el-option
                     v-for="option in item.options"
                     :key="option.label"
@@ -35,7 +31,6 @@
               <template v-else>
                 <component :is="item.type" :placeholder="item.placeholder" />
               </template>
-              <!-- <el-input :placeholder="item.placeholder" /> -->
             </el-form-item>
           </el-col>
         </template>

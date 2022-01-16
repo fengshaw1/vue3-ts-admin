@@ -34,10 +34,7 @@ export default defineComponent({
           { title: '篮球', value: 'basketball' },
           { title: '足球', value: 'football' },
           { title: '排球', value: 'baseball' },
-          { title: '棒球', value: 'abc' },
-          { title: '猴子', value: 'houzi' },
-          { title: '熊猫', value: 'panda' },
-          { title: '竹子', value: 'bamboo' }
+          { title: '羽毛球', value: 'badminton' }
         ]
       },
       {
