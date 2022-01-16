@@ -1,4 +1,4 @@
-type IFormType = 'el-input' | 'el-password' | 'el-select' | 'el-datepicker'
+type IFormType = 'el-input' | 'el-password' | 'el-select' | 'el-date-picker'
 
 export interface IFormItem {
   type: IFormType
@@ -6,6 +6,12 @@ export interface IFormItem {
   rules?: any[]
   placeholder?: any
   options?: any[]
-  start?: any
-  end?: any
+  otherOptions?: any
+}
+
+export interface IForm {
+  formItems: IFormItem[]
+  labelWidth?: string
+  colLayout?: any
+  itemLayout?: any
 }
