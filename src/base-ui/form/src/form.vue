@@ -1,5 +1,9 @@
 <template>
   <div class="kw-form">
+    <!-- 留两个插槽、放标题，按钮 -->
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
@@ -52,6 +56,9 @@
         </template>
       </el-row>
     </el-form>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 

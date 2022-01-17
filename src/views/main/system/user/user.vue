@@ -1,30 +1,21 @@
 <template>
   <div class="user">
-    <kw-form v-bind="searchFormConfig" v-model="formData" />
+    <page-search :searchFormConfig="searchFormConfig" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import KwForm from '@/base-ui/form'
+import { defineComponent } from 'vue'
+import PageSearch from '@/components/page-search'
 import { searchFormConfig } from './config/search.config'
+
 export default defineComponent({
   components: {
-    KwForm
+    PageSearch
   },
   name: 'user',
   setup() {
-    const formData = ref({
-      id: '',
-      name: '',
-      password: '',
-      sport: '',
-      createTime: ''
-    })
-    return {
-      formData,
-      searchFormConfig
-    }
+    return { PageSearch, searchFormConfig }
   }
 })
 </script>
