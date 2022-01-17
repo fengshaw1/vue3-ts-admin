@@ -70,7 +70,7 @@ class KWRequest {
     )
   }
 
-  request<T>(config: KWRequestConfig<T>): Promise<T> {
+  request<T = any>(config: KWRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors.requestInterceptor(config)
@@ -97,16 +97,16 @@ class KWRequest {
     })
   }
 
-  get<T>(config: KWRequestConfig<T>): Promise<T> {
+  get<T = any>(config: KWRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
-  post<T>(config: KWRequestConfig<T>): Promise<T> {
+  post<T = any>(config: KWRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
-  delete<T>(config: KWRequestConfig<T>): Promise<T> {
+  delete<T = any>(config: KWRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
-  patch<T>(config: KWRequestConfig<T>): Promise<T> {
+  patch<T = any>(config: KWRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }

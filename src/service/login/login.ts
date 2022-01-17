@@ -1,6 +1,6 @@
 import kwRequest from '../index'
-import { IAccount, IDataType, ILoginResult } from './types'
-
+import { IAccount, ILoginResult } from './types'
+import { IDataType } from '../types'
 // 借助枚举类型，方便管理所有登录接口
 enum LoginApi {
   AccountLogin = '/login',
