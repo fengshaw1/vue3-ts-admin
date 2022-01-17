@@ -2,6 +2,7 @@ type IFormType = 'el-input' | 'el-password' | 'el-select' | 'el-date-picker'
 
 export interface IFormItem {
   type: IFormType
+  field: string
   label: string
   rules?: any[]
   placeholder?: any

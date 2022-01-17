@@ -1,11 +1,11 @@
 <template>
   <div class="user">
-    <kw-form v-bind="searchFormConfig" />
+    <kw-form v-bind="searchFormConfig" v-model="formData" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import KwForm from '@/base-ui/form'
 import { searchFormConfig } from './config/search.config'
 export default defineComponent({
@@ -14,7 +14,15 @@ export default defineComponent({
   },
   name: 'user',
   setup() {
+    const formData = ref({
+      id: '',
+      name: '',
+      password: '',
+      sport: '',
+      createTime: ''
+    })
     return {
+      formData,
       searchFormConfig
     }
   }

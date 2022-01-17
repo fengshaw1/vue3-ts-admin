@@ -12,6 +12,7 @@
                   :is="'el-input'"
                   show-password
                   :placeholder="item.placeholder"
+                  v-model="formData[`${item.field}`]"
                 />
               </template>
               <template v-else-if="item.type === 'el-select'">
@@ -19,6 +20,7 @@
                   :is="item.type"
                   :placeholder="item.placeholder"
                   style="width: 100%"
+                  v-model="formData[`${item.field}`]"
                 >
                   <el-option
                     v-for="option in item.options"
@@ -35,10 +37,15 @@
                   :is="item.type"
                   v-bind="item.otherOptions"
                   style="width: 100%"
+                  v-model="formData[`${item.field}`]"
                 />
               </template>
               <template v-else>
-                <component :is="item.type" :placeholder="item.placeholder" />
+                <component
+                  :is="item.type"
+                  :placeholder="item.placeholder"
+                  v-model="formData[`${item.field}`]"
+                />
               </template>
             </el-form-item>
           </el-col>
@@ -49,10 +56,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import { IFormItem } from '../types/index'
 export default defineComponent({
   props: {
+    modelValue: {
+      type: Object,
+      required: true
+    },
     formItems: {
       // 属性断言、给传入的类型限制
       type: Array as PropType<IFormItem[]>,
@@ -77,8 +88,16 @@ export default defineComponent({
       })
     }
   },
-  setup() {
-    return {}
+  setup(props, { emit }) {
+    // 生成一份新的对象、 在现对象的基础上修改
+    // 不影响原来对象的值
+    const formData = ref({ ...props.modelValue })
+
+    // 实现双向绑定
+    watch(formData, (newValue) => emit('update:modelValue', newValue), {
+      deep: true
+    })
+    return { formData }
   }
 })
 </script>
