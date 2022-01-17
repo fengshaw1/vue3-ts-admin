@@ -1,5 +1,9 @@
 import { RouteRecordRaw } from 'vue-router'
 
+// 暂存首次跳转的页面
+// /main => /main/.....
+let firstMenu: any = null
+
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   console.log(userMenus)
   const routes: RouteRecordRaw[] = []
@@ -23,6 +27,9 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
         const route = allRoutes.find((route) => route.path === menu.url)
         // 将找到的路由放入routes数组中
         if (route) routes.push(route)
+        if (!firstMenu) {
+          firstMenu = menu
+        }
       } else {
         // 不等于2、再去递归它的children属性
         _recurseGetRoute(menu.children)
@@ -33,3 +40,19 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   _recurseGetRoute(userMenus)
   return routes
 }
+
+// 将当前路径和路由路径进行匹配、返回对应的id值
+export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        return findMenu
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+
+export { firstMenu }

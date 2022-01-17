@@ -21,10 +21,11 @@ Object.keys(ElIcons).forEach((key) => {
   app.component(key, ElIcons[key as keyof typeof ElIcons])
 })
 
-app.use(router)
 app.use(store)
 app.use(ElementPlus)
 setupStore()
+app.use(router)
+
 app.mount('#app')
 
 // 链式使用
