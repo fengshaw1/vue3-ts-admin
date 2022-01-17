@@ -2,18 +2,25 @@
   <div class="nav-header">
     <el-icon class="fold-menu" @click="handleFoldClick"><fold /></el-icon>
     <div class="content">
-      <div>面包屑</div>
+      <kw-breadcrumb :breadcrumbs="breadcrumbs" />
       <user-info />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import UserInfo from './cpns/user-info.vue'
+import KwBreadcrumb from '@/base-ui/breadcrumb'
+
+import { useStore } from '@/store'
+import { useRoute } from 'vue-router'
+import { pathMapBreadcrumbs } from '@/utils/map-menus'
+
 export default defineComponent({
   components: {
-    UserInfo
+    UserInfo,
+    KwBreadcrumb
   },
   emits: ['foldChange'],
   setup(props, { emit }) {
@@ -22,7 +29,17 @@ export default defineComponent({
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
-    return { isFold, handleFoldClick }
+
+    const store = useStore()
+    // 路径是变化的、故使用计算属性进行推导
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.login.userMenus
+      const route = useRoute()
+      const currentPath = route.path
+      return pathMapBreadcrumbs(userMenus, currentPath)
+    })
+
+    return { isFold, handleFoldClick, breadcrumbs }
   }
 })
 </script>
