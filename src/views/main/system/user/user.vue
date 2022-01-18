@@ -3,7 +3,13 @@
     <page-search :searchFormConfig="searchFormConfig" />
 
     <div class="content">
-      <kw-table :listData="userList" :propList="propList">
+      <kw-table
+        :listData="userList"
+        :propList="propList"
+        :showIndexColumn="showIndexColumn"
+        :showSelectColumn="showSelectColumn"
+      >
+        <!-- 使用: 作用域插槽，在此处进行数据的获取 -->
         <template #status="scope">
           <el-button
             plain
@@ -19,12 +25,25 @@
         <template #updateAt="scope">
           <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
         </template>
+        <template #handle>
+          <div class="handle-btns">
+            <el-button size="default" type="text" :icon="Edit">编辑</el-button>
+            <el-button
+              size="default"
+              type="text"
+              style="color: red"
+              :icon="Delete"
+              >删除
+            </el-button>
+          </div>
+        </template>
       </kw-table>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { Edit, Delete } from '@element-plus/icons-vue'
 import { defineComponent, computed } from 'vue'
 import PageSearch from '@/components/page-search'
 import { searchFormConfig } from './config/search.config'
@@ -59,21 +78,30 @@ export default defineComponent({
       {
         prop: 'createAt',
         label: '创建时间',
-        minWidth: '250',
+        minWidth: '130',
         slotName: 'createAt'
       },
       {
         prop: 'updateAt',
         label: '更新时间',
-        minWidth: '250',
+        minWidth: '150',
         slotName: 'updateAt'
-      }
+      },
+      { label: '操作', minWidth: '137', slotName: 'handle' }
     ]
+
+    const showIndexColumn = true
+    const showSelectColumn = true
+
     return {
       PageSearch,
       searchFormConfig,
       userList,
-      propList
+      propList,
+      showIndexColumn,
+      showSelectColumn,
+      Edit,
+      Delete
     }
   }
 })
