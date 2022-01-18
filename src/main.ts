@@ -14,6 +14,7 @@ import router from './router'
 import store from './store'
 // 刷新页面的时候就调用此函数
 import { setupStore } from './store'
+import { globalRegister } from './global'
 
 const app = createApp(App)
 
@@ -21,6 +22,8 @@ Object.keys(ElIcons).forEach((key) => {
   app.component(key, ElIcons[key as keyof typeof ElIcons])
 })
 
+// 全局注册的内容
+app.use(globalRegister)
 app.use(store)
 app.use(ElementPlus)
 setupStore()
