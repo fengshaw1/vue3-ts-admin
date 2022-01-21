@@ -1,115 +1,33 @@
 <template>
   <div class="user">
     <page-search :searchFormConfig="searchFormConfig" />
-
-    <div class="content">
-      <kw-table
-        :listData="userList"
-        :propList="propList"
-        :showIndexColumn="showIndexColumn"
-        :showSelectColumn="showSelectColumn"
-      >
-        <!-- 使用: 作用域插槽，在此处进行数据的获取 -->
-        <template #status="scope">
-          <el-button
-            plain
-            size="small"
-            :type="scope.row.enable ? 'success' : 'danger'"
-          >
-            {{ scope.row.enable ? '启用' : '禁用' }}
-          </el-button>
-        </template>
-        <template #createAt="scope">
-          <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
-        </template>
-        <template #updateAt="scope">
-          <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
-        </template>
-        <template #handle>
-          <div class="handle-btns">
-            <el-button size="default" type="text" :icon="Edit">编辑</el-button>
-            <el-button
-              size="default"
-              type="text"
-              style="color: red"
-              :icon="Delete"
-              >删除
-            </el-button>
-          </div>
-        </template>
-      </kw-table>
-    </div>
+    <page-content :contentTableConfig="contentTableConfig"></page-content>
   </div>
 </template>
 
 <script lang="ts">
-import { Edit, Delete } from '@element-plus/icons-vue'
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
+
 import PageSearch from '@/components/page-search'
+import PageContent from '@/components/page-content'
+
 import { searchFormConfig } from './config/search.config'
-import { useStore } from '@/store'
-import KwTable from '@/base-ui/table'
+import { contentTableConfig } from './config/content.config'
 
 export default defineComponent({
   components: {
     PageSearch,
-    KwTable
+    PageContent
   },
   name: 'user',
   setup() {
-    const store = useStore()
-    // 触发store中的getPageListAction
-    store.dispatch('system/getPageListAction', {
-      pageUrl: '/users/list',
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    })
-
-    const userList = computed(() => store.state.system.userList)
-    // const userCount = computed(() => store.state.system.userCount)
-
-    const propList: any[] = [
-      { prop: 'name', label: '用户名', minWidth: '150' },
-      { prop: 'realname', label: '真实姓名', minWidth: '100' },
-      { prop: 'cellphone', label: '手机号码', minWidth: '100' },
-      { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
-      {
-        prop: 'createAt',
-        label: '创建时间',
-        minWidth: '130',
-        slotName: 'createAt'
-      },
-      {
-        prop: 'updateAt',
-        label: '更新时间',
-        minWidth: '150',
-        slotName: 'updateAt'
-      },
-      { label: '操作', minWidth: '137', slotName: 'handle' }
-    ]
-
-    const showIndexColumn = true
-    const showSelectColumn = true
-
     return {
       PageSearch,
       searchFormConfig,
-      userList,
-      propList,
-      showIndexColumn,
-      showSelectColumn,
-      Edit,
-      Delete
+      contentTableConfig
     }
   }
 })
 </script>
 
-<style scoped lang="less">
-.content {
-  padding: 20px;
-  border-top: 20px solid #f5f5f5;
-}
-</style>
+<style scoped lang="less"></style>
