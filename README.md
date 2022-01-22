@@ -1,29 +1,20 @@
-# vue3-ts-cms
+### step
 
-## Project setup
+#### install
 
-```
+```sh
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### Lint
 
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Lints and fixes files
-
-```
+```sh
 npm run lint
 ```
 
-### Customize configuration
+#### Start
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```sh
+npm run serve
+```
+
