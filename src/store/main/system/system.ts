@@ -27,6 +27,7 @@ const systemModule: Module<ISystemState, IRootState> = {
         payload.pageUrl,
         payload.queryInfo
       )
+      console.log(pageResult)
       const { list, totalCount } = pageResult.data
       // 将获取到的数据借助mutation传给state
       commit('changeUserList', list)
