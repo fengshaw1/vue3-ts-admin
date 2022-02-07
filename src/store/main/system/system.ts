@@ -9,7 +9,9 @@ const systemModule: Module<ISystemState, IRootState> = {
   state() {
     return {
       userList: [],
-      userCount: 0
+      userCount: 0,
+      roleList: [],
+      roleCount: 0
     }
   },
   mutations: {
@@ -18,20 +20,53 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeUserCount(state, userCount: number) {
       state.userCount = userCount
+    },
+    changeRoleList(state, roleList: []) {
+      state.roleList = roleList
+    },
+    changeRoleCount(state, roleCount: number) {
+      state.roleCount = roleCount
+    }
+  },
+  getters: {
+    pageListData(state) {
+      return (pageName: string) => {
+        switch (pageName) {
+          case 'user':
+            return state.userList
+          case 'role':
+            return state.roleList
+        }
+      }
     }
   },
   actions: {
     async getPageListAction({ commit }, payload: any) {
+      const pageName = payload.pageName
+      let pageUrl = ''
+      switch (pageName) {
+        case 'user':
+          pageUrl = '/users/list'
+          break
+        case 'role':
+          pageUrl = '/role/list'
+          break
+      }
+
       // 发送网络请求
-      const pageResult = await getPageListData(
-        payload.pageUrl,
-        payload.queryInfo
-      )
-      console.log(pageResult)
+      const pageResult = await getPageListData(pageUrl, payload.queryInfo)
+
       const { list, totalCount } = pageResult.data
-      // 将获取到的数据借助mutation传给state
-      commit('changeUserList', list)
-      commit('changeUserCount', totalCount)
+      switch (pageName) {
+        case 'user':
+          commit(`changeUserList`, list)
+          commit(`changeUserCount`, totalCount)
+          break
+        case 'role':
+          commit(`changeRoleList`, list)
+          commit(`changeRoleCount`, totalCount)
+          break
+      }
     }
   }
 }

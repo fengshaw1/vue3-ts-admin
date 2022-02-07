@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <kw-table :listData="userList" v-bind="contentTableConfig">
+    <kw-table :listData="dataList" v-bind="contentTableConfig">
       <!-- header插槽 -->
       <template #headerHandler>
         <el-button round type="primary" size="default">新建用户</el-button>
@@ -55,25 +55,32 @@ export default defineComponent({
     contentTableConfig: {
       type: Object,
       required: true
+    },
+    pageName: {
+      type: String,
+      required: true
     }
   },
-  setup() {
+  setup(props) {
     const store = useStore()
     // 触发store中的getPageListAction
     store.dispatch('system/getPageListAction', {
-      pageUrl: '/users/list',
+      pageName: props.pageName,
       queryInfo: {
         offset: 0,
         size: 10
       }
     })
 
-    const userList = computed(() => store.state.system.userList)
+    const dataList = computed(() =>
+      store.getters[`system/pageListData`](props.pageName)
+    )
     // const userCount = computed(() => store.state.system.userCount)
+
     return {
       Edit,
       Delete,
-      userList
+      dataList
     }
   }
 })
