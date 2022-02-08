@@ -63,14 +63,19 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-    // 触发store中的getPageListAction
-    store.dispatch('system/getPageListAction', {
-      pageName: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    })
+
+    const getPageData = (queryInfo: any = {}) => {
+      store.dispatch('system/getPageListAction', {
+        pageName: props.pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+          ...queryInfo
+        }
+      })
+    }
+
+    getPageData()
 
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
@@ -80,7 +85,8 @@ export default defineComponent({
     return {
       Edit,
       Delete,
-      dataList
+      dataList,
+      getPageData
     }
   }
 })
